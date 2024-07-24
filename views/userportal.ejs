@@ -6,16 +6,16 @@
         <link type="text/css" rel="stylesheet" href="../public/index.css">
         <script>
             homelogo=()=>{
-               window.location.href='http://localhost:4000/'
+               window.location.href='https://jobportal-fefw.onrender.com/'
            }
            function userportal(){
-            window.location.href=`http://localhost:4000/userportal`
+            window.location.href=`https://jobportal-fefw.onrender.com/userportal`
            }
            function link(val){
             window.location.href=val
            }
            function details(id){
-            window.location.href=`http://localhost:4000/details?val=${id}`
+            window.location.href=`https://jobportal-fefw.onrender.com/details?val=${id}`
            }
            setTimeout(()=>{
             let welcomemsg=document.getElementById('welcomemsg')
@@ -30,7 +30,7 @@
             <div >
                 <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="profileupdate.close()">X</button>
                 <center>
-                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-56 " >
+                    <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-24 sm:mx-56 " >
                 <form class="flex flex-col" method="post" action="/updateprofile" enctype="multipart/form-data" id="apply_form" >
                     <label class="font-semibold"> Profile Update:-</label>
                     <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2 p-2" type="file" name="photo" accept=".png" required>
@@ -40,12 +40,12 @@
             </div>
         </dialog>
         <%if(job_applied){%>
-            <div class="bg-green-500 w-2/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1" id="welcomemsg">Appied Successfully </div>
+            <div class="bg-green-500 w-5/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1 sm:w-2/12" id="welcomemsg">Appied Successfully </div>
                 <%}%>
         <div class="bg-slate-200 m-2 h-16 rounded-lg flex">
             <img onclick="homelogo()" src="../public/images/logo.png" class="w-20 cursor-pointer" >
-            <form class="w-96 bg-slate-200 mt-2.5 mx-auto" method="get" action="/search">
-                <input type="search" placeholder="Search By Company" name="search" class="w-96 h-12 rounded-lg">
+            <form class="w-[150px] bg-slate-200 mt-2.5 mx-auto sm:w-96" method="get" action="/search">
+                <input type="search" placeholder="Search By Company" name="search" class="w-[150px] h-12 rounded-lg sm:w-96">
             </form>
             <button class="btn" onclick="window.location.href='/logout'">LogOut</button>
             <%if(userprofile){%>
@@ -58,18 +58,19 @@
         <div class=" m-2 ">
             
             <%if(userprofile){%>
-                <img class=" w-[500px] h-[500px] border-2 border-solid border-slate-900 rounded-full mr-2 fixed" src="../public/userprofile/<%=data.username%>.png">
+                <img class=" w-8/12 h-[250px] mx-[60px] mb-2 relative  border-2 border-solid border-slate-900 rounded-full mr-2 sm:fixed sm:w-[500px] sm:h-[500px] sm:mx-0 sm:mb-0" src="../public/userprofile/<%=data.username%>.png">
             <%}else{%>
-                <img class=" w-[500px] h-[500px] border-2 border-solid border-slate-900 rounded-full mr-2 fixed" src="../public/userprofile/user.png">
+                <img class=" w-[500px] h-[500px] border-2 border-solid border-slate-900 rounded-full mr-2 fixed sm:w-[500px] sm:h-[500px] sm:mx-0 sm:mb-0" src="../public/userprofile/user.png">
                 <%}%>
-            <div class="bg-slate-200  flex flex-col rounded-lg ml-[525px] p-3 ">
+            <div class="bg-slate-200 flex flex-col rounded-lg ml-0 p-2 sm:ml-[525px] sm:p-3 ">
                 <h1 class="text-3xl font-bold underline mx-auto"><%=data.username%></h1>
                 <h1 class="text-2xl font-bold mt-5">Role:- <%=data.type%></h1>
                 <h1 class="text-2xl font-bold mt-5"> Email:- <%=data.email%></h1>
                 <h1 class="text-2xl font-bold mt-5"> LikdinProfile:- <a href="<%=data.likdinid%>" class="text-sky-950 hover:underline"><%=data.likdinid%></a></h1>
                 <h1 class="text-base font-semibold mt-5"><span class="text-base font-bold ">MobileNumber:-</span> +91 <%=data.mobilenumber%></h1>
                 <h1 class="font-bold mx-auto text-2xl mb-5 underline">Skills</h1>
-                <div class="border-2 border-solid border-slate-900 text-center flex flex-row gap-3 mb-5 mx-auto rounded-lg p-4 flex-wrap">
+                
+                <div class=" text-center flex flex-row gap-3 mb-5 mx-auto rounded-lg p-4 flex-wrap">
                     
                     <%let count=1%>
                     <%for(let skill of data.skills){%>
@@ -82,13 +83,13 @@
                         </ol>
                         <%}%>
                 </div>
-                <form class="grid grid-cols-8 gap-2 grid-rows-4" id="update_form" action="/updateskills" type="get">
+                <form class=" grid grid-cols-4 grid-rows-4  sm:grid-cols-8 gap-2 sm:grid-rows-4" id="update_form" action="/updateskills" type="get">
                     <%for(let uskills of userskills){%>
                         <%let skl=data.skills%>
                         <%if(skl.includes(uskills)){%>
-                            <input class="h-5" type="checkbox" name="skills" value="<%=uskills%>" checked><span class="text-base   font-bold underline"><%=uskills%> </span>
+                            <input class="h-5 " type="checkbox" name="skills" value="<%=uskills%>" checked><span class="text-base  font-bold underline -ml-6 sm:-ml-0"><%=uskills%> </span>
                             <%}else{%>
-                                <input class="h-5" type="checkbox" name="skills" value="<%=uskills%>"><span class="text-base   font-bold underline"><%=uskills%> </span>
+                                <input class="h-5 " type="checkbox" name="skills" value="<%=uskills%>"><span class="text-base  font-bold underline -ml-6 sm:-ml-0"><%=uskills%> </span>
                                 <%}%>
                         <%}%>
                 </form> 
@@ -99,29 +100,30 @@
             </div>
            
 
-            <div class=" flex flex-col rounded-lg ml-[520px] p-3 mt-10">
+            <div class=" flex flex-col rounded-lg ml-0 sm:ml-[520px] p-3 mt-10">
                 <h1 class="font-bold mx-auto text-2xl mb-5 underline">Pending Applications</h1>
                 <%for(let jdata of companydata){%>
-                    <div class="bg-slate-200  rounded-lg  flex flex-row border-2 border-solid border-slate-900 mb-10">
+                    <div class="bg-slate-200  rounded-lg  flex flex-col sm:flex-row border-2 border-solid border-slate-900 mb-10">
                         <% let str2=jdata.company_name%>
                             <% let nstr2=str2.split(".")%>
-                        <img class="w-64 h-60 rounded-lg m-1 mix-blend-multiply" src="../public/images/<%=nstr2[0]%>.jpeg ">
+                        <img class=" w-[330px] sm:w-64 h-60 rounded-lg m-1 mix-blend-multiply" src="../public/images/<%=nstr2[0]%>.jpeg ">
                         <div class="w-4/5  flex flex-col justify-center p-3">
                             <h1 class="font-bold mb-2"><%=jdata.company_name%></h1>
                             <h3 class="font-semibold mb-2"><%=jdata.company_type%></h3>
                             <% let str=jdata.cover_letter%>
                             <% let nstr=str.slice(0,300)%>
-                            <h5 class="mb-5"><span class="text-base font-bold underline">Cover Letter:-</span><%=nstr%>...</h5>
-                            <div class="flex flex-row mx-auto gap-3">
-                            <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="link('<%=jdata.company_link%>')">Linkdin Profile</button>
-                            <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="details('<%=jdata.company_id%>')">Know More</button>
-                            <button class="bg-red-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-red-400 hover:font-bold hover:underline h-12" disabled>Aplication Pending</button>
+                            <h5 class="mb-5 w-[300px] sm:w-[800px]"><span class="text-base font-bold underline">Cover Letter:-</span><%=nstr%>...</h5>
+                            <div class="flex flex-row mx-auto gap-3 flex-wrap">
+                            <button class="bg-sky-500 rounded-lg font-bold w-80 sm:w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="link('<%=jdata.company_link%>')">Linkdin Profile</button>
+                            <button class="bg-sky-500 rounded-lg font-bold w-80 sm:w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="details('<%=jdata.company_id%>')">Know More</button>
+                            <button class="bg-red-500 rounded-lg font-bold w-80 sm:w-36  border-2 border-solid border-slate-900 hover:bg-red-400 hover:font-bold hover:underline h-12" disabled>Aplication Pending</button>
                         </div>
                         </div>
                     </div>
                     <%}%>
                 </div>
         </div>    
-        
+        <center><h1 class="mx-auto bg-slate-800 font-bold text-slate-100">©Credits/Rights Reserved:- Taha</h1></center>
+
     </body>
 </html>

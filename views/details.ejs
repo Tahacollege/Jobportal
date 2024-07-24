@@ -2,17 +2,17 @@
     <head>
         <title>JoBPortal</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <link type="text/css" rel="stylesheet" href="../public/index.css">
         <script>
             homelogo=()=>{
-               window.location.href='http://localhost:4000/'
+               window.location.href='https://jobportal-fefw.onrender.com/'
            }
            function link(val){
             window.location.href=val
            }
            function details(id){
-            window.location.href=`http://localhost:4000/details?val=${id}`
+            window.location.href=`https://jobportal-fefw.onrender.com/details?val=${id}`
            }
            function apply(id){
             var username='<%=uname%>'
@@ -24,14 +24,14 @@
             const fd=new FormData(form)
             const urlEncoded=new URLSearchParams(fd).toString();
 
-            fetch('http://localhost:4000/jobapply',{
+            fetch('https://jobportal-fefw.onrender.com/jobapply',{
                 method:"Post",
                 body:fd,
             })
            })*/
             }
             else{
-            window.location.href=`http://localhost:4000/apply?val=${id}`
+            window.location.href=`https://jobportal-fefw.onrender.com/apply?val=${id}`
             }
            }
            setTimeout(()=>{
@@ -40,7 +40,7 @@
            },2000)
 
            function userportal(){
-            window.location.href=`http://localhost:4000/userportal`
+            window.location.href=`https://jobportal-fefw.onrender.com/userportal`
            }
            function showcompany(val){
             if(val==1){
@@ -73,14 +73,14 @@
     </head>
     <body>
         <%if(uname){%>
-            <div class="bg-green-500 w-2/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1" id="welcomemsg">Welcome <%=uname%> </div>
+            <div class="bg-green-500 w-4/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1 sm:w-2/12" id="welcomemsg">Welcome <%=uname%> </div>
                 <%}else{%>
-                <div class="bg-red-500 w-2/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1" id="welcomemsg">Please Login Or Signup To Apply </div>
+                <div class="bg-red-500 w-8/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1 sm:w-2/12" id="welcomemsg">Please Login Or Signup To Apply </div>
                     <%}%>
         <div class="bg-slate-200 m-2 h-16 rounded-lg flex">
             <img onclick="homelogo()" src="../public/images/logo.png" class="w-20 cursor-pointer" >
-            <form class="w-96 bg-slate-200 mt-2.5 mx-auto" method="get" action="/search">
-                <input type="search" placeholder="Search By Company" name="search" class="w-96 h-12 rounded-lg">
+            <form class="w-[150px] bg-slate-200 mt-2.5 mx-auto sm:w-96" method="get" action="/search">
+                <input type="search" placeholder="Search By Company" name="search" class="w-[150px] h-12 rounded-lg sm:w-96">
             </form>
         <%if(uname ){%>
             <button class="btn" onclick="window.location.href='/logout'">LogOut</button>
@@ -98,7 +98,7 @@
             <div >
                 <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="SignupDialog.close()">X</button>
                 <center>
-                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-56 " >
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-24 sm:mx-56 " >
                 <form class="flex flex-col" method="post" action="/signup">
                     <label class="font-semibold"> Username:-</label>
                     <input class="border-2 border-solid border-slate-900 h-11  rounded-2xl my-2" type="text" name="username">
@@ -122,11 +122,11 @@
             </div>
         </dialog>
 
-        <dialog id="LoginDialog" class="h-[410px] w-[600px] rounded-lg">
+        <dialog id="LoginDialog" class=" w-[600px] rounded-lg">
             <div >
                 <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="LoginDialog.close()">X</button>
                 <center>
-                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-52">
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-24 sm:mx-52">
                 <form class="flex flex-col" method="post" action="/login">
                     <label class="font-semibold"> Email:-</label>
                     <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="email" name="email">
@@ -150,7 +150,7 @@
                         <div >
                             <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="ApplyDialog.close()">X</button>
                             <center>
-                            <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-52">
+                            <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-24 sm:mx-52">
                                     <form class="flex flex-col" method="post" action="/jobapply" enctype="multipart/form-data" id="apply_form" >
                                 <label class="font-semibold"> Email:-</label>
                                 <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="email" name="email" value="<%=udata.email%>" >
@@ -171,11 +171,11 @@
                                 </dialog> <%}else{%>
                                     <%}%>
 
-                    <div class=" m-2 flex flex-row">
+                    <div class=" m-2 flex flex-col sm:flex-row">
                         <% let str3=data.companyname%>
                                 <% let nstr2=str3.split(".")%>
-                        <img class=" w-4/12 border-2 border-solid border-slate-900 rounded-full mr-2 fixed" src="../public/images/<%=nstr2[0]%>.jpeg">
-                        <div class="bg-slate-200 w-8/12 flex  flex-col rounded-lg ml-[520px] p-3 ">
+                        <img class=" w-6/12 border-2 mx-[80px] border-solid border-slate-900 rounded-full mr-2  mb-2 relative sm:fixed sm:w-4/12 sm:mx-0 sm:mb-0" src="../public/images/<%=nstr2[0]%>.jpeg">
+                        <div class="bg-slate-200 w-11/12 flex  flex-col rounded-lg ml-[13px] sm:ml-[520px] p-3 sm:w-8/12">
                             <h1 class="text-3xl font-bold underline mx-auto"><%=data.companyname%></h1>
                             <h1 class="text-2xl font-bold mt-5">Role:- <%=data.Type%></h1>
                             <h1 class="text-2xl font-bold mt-5"> Place Of Work:- <%=data.Location%></h1>
@@ -213,5 +213,7 @@
                             </div>
                         </div>
                     </div>
+                    <center><h1 class="mx-auto bg-slate-800 font-bold text-slate-100">©Credits/Rights Reserved:- Taha</h1></center>
+
     </body>
 </html>

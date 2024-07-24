@@ -1,6 +1,7 @@
 const express=require('express')
 const path=require('path')
 const app=express()
+//vibha tiwari
 const DbConnection=require('./db')
 const bodyparser=require('body-parser')
 const multer=require('multer')
@@ -212,11 +213,14 @@ app.post('/login',async (req,resp)=>{
         var uname=undefined
         var log=undefined
     }
+     data=await collection.findOne({'email':email, 'password':password})
     if(data.type=='employer'){
         let cdata=await collection2.findOne({'companyname':companyname})
         let adata=await collection3.find({'company_name':companyname}).toArray()
         employer=true
         req.session.companyname=req.body.companyname
+        console.log(`login emial:- ${req.session.email}`)
+    console.log(`login comapny:- ${req.session.companyname}`)
         resp.render(`employerIndex`,{uname,log,cdata,userprofile,adata})
     }
     else{
@@ -381,10 +385,10 @@ app.post('/pagination',async(req,resp)=>{
         var p3=3
         var p4=9
         var p5=10
-        for(let i=89;i<=99;i++){
+        for(let i=99;i<=109;i++){
             fulldata[i]=jobdata[i]
         }
-        for(let i=0;i<=89;i++){
+        for(let i=0;i<=99;i++){
             fulldata.shift()
         }
         resp.render(`index`,{uname,log,jobdata,fulldata,p1,p2,p3,p4,p5,userprofile})
@@ -514,6 +518,7 @@ app.post('/jobapply',upload.single('resume'),async(req,resp)=>{
 
 app.get('/userportal',async(req,resp)=>{
     var email=req.session.email
+    console.log(req.session.email)
     let result=await DbConnection
     let collection=result.collection('users')
     let collection2=result.collection('applied')
@@ -599,9 +604,10 @@ app.get('/employerportal',async(req,resp)=>{
     let collection=result.collection('users')
     let collection2=result.collection('jobs')
     let data=await collection.findOne({'email':req.session.email})
-    let company_name=data.company_name
     let comp=req.session.companyname
-    let cdata=await collection2.findOne({'companyname':req.session.companyname})
+    console.log(`portal emial:- ${req.session.email}`)
+    console.log(`portal comapny:- ${req.session.companyname}`)
+    let cdata=await collection2.findOne({'companyname':comp})
     resp.render('employerportal',{data,cdata,comp})
 })
 
@@ -648,4 +654,4 @@ app.get('/logout',async(req,resp)=>{
         var p5=10
         resp.render(`index`,{uname,log,jobdata,fulldata,p1,p2,p3,p4,p5,userprofile})
 })
-app.listen(5000)
+app.listen(4000)

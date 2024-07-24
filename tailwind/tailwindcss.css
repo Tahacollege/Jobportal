@@ -4,7 +4,7 @@
 
 @layer components{
     .btn{
-        @apply rounded-lg bg-sky-500 w-20 h-11 mt-2.5 ml-11 mr-2 font-semibold underline hover:bg-sky-400 hover:font-bold
+        @apply rounded-lg bg-sky-500 w-20 h-11 mt-2.5 ml-2 mr-2 font-semibold underline hover:bg-sky-400 hover:font-bold sm:ml-11
     }
     .ldiv{
         @apply font-semibold mt-3
