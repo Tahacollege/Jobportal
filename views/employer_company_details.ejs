@@ -1,0 +1,136 @@
+<html>
+    <head>
+        <title>JoBPortal</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link type="text/css" rel="stylesheet" href="../public/index.css">
+        <script>
+           function link(val){
+            window.location.href=val
+           }
+           function details(id){
+            window.location.href=`http://localhost:4000/details?val=${id}`
+           }
+           
+           setTimeout(()=>{
+            let welcomemsg=document.getElementById('welcomemsg')
+            welcomemsg.classList.add('disappear')
+           },2000)
+
+           function userportal(){
+            window.location.href=`http://localhost:4000/employerportal`
+           }
+           
+          
+
+
+       </script>
+    </head>
+    <body>
+       
+        <dialog id="aboutupdate" class=" w-[600px] rounded-lg">
+            <div >
+                <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="aboutupdate.close()">X</button>
+                <center>
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-56 " >
+                <form class="flex flex-col" method="post" action="/aboutupdate" id="profileupdateform" >
+                    <label class="font-semibold"> About:-</label>
+                    <textarea class="border-2 border-solid border-slate-900 h-40 rounded-2xl my-2 " name="about" required><%=data.about%></textarea>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="c_id" value="<%=data._id%>" hidden>
+                    <button onclick="aboutupdate.close()" class="rounded-lg bg-sky-500 w-20 h-11 mt-2.5 mx-auto font-semibold underline hover:bg-sky-400 hover:font-bold" >Submit</button>
+                    </form> 
+            </center>
+            </div>
+        </dialog>
+
+        <dialog id="qulalificationupdate" class=" w-[600px] rounded-lg">
+            <div >
+                <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="qulalificationupdate.close()">X</button>
+                <center>
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-56 " >
+                <form class="flex flex-col" method="post" action="/aboutupdate" id="profileupdateform" >
+                    <label class="font-semibold"> Qualifications:-</label>
+                    <textarea class="border-2 border-solid border-slate-900 h-40 rounded-2xl my-2 "  name="qual" placeholder="Put fullstop at end of each line " required><%=data.Qualifications%></textarea>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="c_id" value="<%=data._id%>" hidden>
+                    <button onclick="qulalificationupdate.close()" class="rounded-lg bg-sky-500 w-20 h-11 mt-2.5 mx-auto font-semibold underline hover:bg-sky-400 hover:font-bold" >Submit</button>
+                    </form> 
+            </center>
+            </div>
+        </dialog>
+
+        <dialog id="responsibiltyupdate" class=" w-[600px] rounded-lg">
+            <div >
+                <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="responsibiltyupdate.close()">X</button>
+                <center>
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-56 " >
+                <form class="flex flex-col" method="post" action="/aboutupdate" id="profileupdateform" >
+                    <label class="font-semibold"> Responsibilities:-</label>
+                    <textarea class="border-2 border-solid border-slate-900 h-40 rounded-2xl my-2 " placeholder="Put fullstop at end of each line "  name="resp" required><%=data.Responsibilities%></textarea>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="c_id" value="<%=data._id%>" hidden>
+                    <button onclick="responsibiltyupdate.close()" class="rounded-lg bg-sky-500 w-20 h-11 mt-2.5 mx-auto font-semibold underline hover:bg-sky-400 hover:font-bold" >Submit</button>
+                    </form> 
+            </center>
+            </div>
+        </dialog>
+        
+            <div class="bg-green-500 w-2/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1" id="welcomemsg">Welcome <%=udata.username%> </div>
+                
+        <div class="bg-slate-200 m-2 h-16 rounded-lg flex">
+            <img onclick="homelogo()" src="../public/images/logo.png" class="w-20 cursor-pointer" >
+            <form class=" visi w-96 bg-slate-200 mt-2.5 mx-auto" method="get" action="/search">
+                <input type="search" placeholder="Search By Company" name="search" class="w-96 h-12 rounded-lg">
+            </form>
+            <button class="btn" onclick="window.location.href='/logout'">LogOut</button>
+            <% let str3=data.companyname%>
+            <% let nstr3=str3.split(".")%>
+            <img  src="../public/images/<%=nstr3[0]%>.jpeg" class="w-12 h-11 mt-3 mr-3 ml-3 cursor-pointer bg-slate-950 rounded-full" onclick="userportal()">
+        </div>
+       
+                    
+
+                    <div class=" m-2 flex flex-row">
+                        <img class=" w-4/12 border-2 border-solid border-slate-900 rounded-full mr-2 fixed" src="../public/images/<%=nstr3[0]%>.jpeg">
+                        <div class="bg-slate-200 w-8/12 flex  flex-col rounded-lg ml-[520px] p-3 ">
+                            <h1 class="text-3xl font-bold underline mx-auto"><%=data.companyname%></h1>
+                            <h1 class="text-2xl font-bold mt-5">Role:- <%=data.Type%></h1>
+                            <h1 class="text-2xl font-bold mt-5"> Place Of Work:- <%=data.Location%></h1>
+                            <h1 class="text-base font-semibold mt-5"><span class="text-base font-bold underline">About Company:-</span> <%=data.about%></h1>
+                            <div class="flex flex-row mx-auto gap-3 mt-9">
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="aboutupdate.showModal()">Edit</button>
+                                </div>
+                            <div class="flex flex-col">
+                            <h1 class="text-3xl font-bold underline mt-10 ">Qualifications </h1>
+                            <%let str=data.Qualifications%>
+                            <% let qual=str.split(".")%>
+                            <% let len=qual.length%>
+                            <ul >
+                            <% while(len>=0){%>
+                                <li class="text-xl font-semibold mt-3 "><%=qual[len]%></li>
+                                <% len=len-1%>
+                                <%}%>
+                            </ul>
+                            <div class="flex flex-row mx-auto gap-3 mt-9">
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="qulalificationupdate.showModal()">Edit</button>
+                                </div>
+                            <h1 class="text-3xl font-bold underline mt-10 ">Responsibilities</h1>
+                            <%let str2=data.Responsibilities%>
+                            <% let qual2=str2.split(".")%>
+                            <% let len2=qual2.length%>
+                            <ul >
+                            <% while(len2>=0){%>
+                                <li class="text-xl font-semibold mt-3 "><%=qual2[len2]%></li>
+                                <% len2=len2-1%>
+                                <%}%>
+                            </ul>
+                            <div class="flex flex-row mx-auto gap-3 mt-9">
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="responsibiltyupdate.showModal()">Edit</button>
+                                </div>
+                            </div>
+                            <hr class="bottom-5 border-solid border-slate-950 mt-5">
+                            <div class="flex flex-row mx-auto gap-3 mt-9">
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="link('<%=data.Link%>')">Linkdin Profile</button>
+                            </div>
+                        </div>
+                    </div>
+    </body>
+</html>

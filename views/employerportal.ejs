@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>JoBPortal</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link type="text/css" rel="stylesheet" href="../public/index.css">
+        <script>
+            function details(id){
+            window.location.href=`http://localhost:4000/details?val=${id}`
+           }
+       </script>
+    </head>
+    <body>
+        <dialog id="postjobmodal" class=" w-[600px] rounded-lg">
+            <div >
+                <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="postjobmodal.close()">X</button>
+                <center>
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-56 " >
+                <form class="flex flex-col" method="post" action="/newjob" enctype="multipart/form-data">
+                    <label class="font-semibold text-red-500"> Make Sure that image name and company name are same</label>
+                    <label class="font-semibold"> Company Logo :-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2 p-2" type="file" name="comapnyphoto" accept=".jpeg" >
+                    <label class="font-semibold"> Company Name:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="companyname">
+                    <label class="font-semibold"> Type</label>
+                    <select class=" border-2 border-solid border-slate-900 rounded-lg m-2 font-semibold" id="select_com" name="type">
+                        <option>Select Type</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="App Development">App Development</option>
+                            <option value="UI/UX ARCHITECT">UI/UX ARCHITECT</option>
+                            <option value="Software Tester">Software Tester</option>
+                            <option value="Data Analyst">Data Analyst</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Sales Manager">Sales Manager</option>
+                            <option value="IT Support">IT Support</option>
+                    </select>
+                    <label class="font-semibold"> Location</label>
+                    <div class=" space-x-3 p-2">
+                        <input  type="radio" name="Joblocation" value="Remote"  onclick="selected('Remote')"><span class="font-semibold ">Remote</span>
+                        <input  type="radio" name="Joblocation" value="HyBrid" onclick="selected('HyBrid')"><span class="font-semibold ">HyBrid</span>
+                        <input  type="radio" name="Joblocation" value="OnSite" onclick="selected('OnSite')"><span class="font-semibold ">OnSite</span>
+                    </div>
+                    <label class="font-semibold"> Responsibilities</label>
+                    <textarea class="border-2 border-solid border-slate-900 h-40 rounded-2xl my-2 " name="resp" ></textarea>
+                    <label class="font-semibold"> Qualifications</label>
+                    <textarea class="border-2 border-solid border-slate-900 h-40 rounded-2xl my-2 " name="qual" ></textarea>
+                    <label class="font-semibold"> About</label>
+                    <textarea class="border-2 border-solid border-slate-900 h-40 rounded-2xl my-2 " name="about" ></textarea>
+                    <label class="font-semibold"> LinkDin Profile</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2 p-2" type="text" name="linkdinid">
+                    <button onclick="postjobmodal.close()" class="rounded-lg bg-sky-500 w-20 h-11 mt-2.5 mx-auto font-semibold underline hover:bg-sky-400 hover:font-bold" >Submit</button>
+                    </form> 
+            </center>
+            </div>
+        </dialog>
+        <div class="bg-slate-200 m-2 h-16 rounded-lg flex">
+            <img onclick="homelogo()" src="../public/images/logo.png" class="w-20 cursor-pointer" >
+            <form class="visi w-96 bg-slate-200 mt-2.5 mx-auto" method="get" action="/search">
+                <input type="search" placeholder="Search By Company" name="search" class="w-96 h-12 rounded-lg">
+            </form>
+            <button class="btn" onclick="window.location.href='/logout'">LogOut</button>
+                <img  src="../public/images/<%=cdata.companyname%>.jpeg" class="w-12 h-11 mt-3 mr-3 ml-3 cursor-pointer bg-slate-950 rounded-full" onclick="userportal()">
+       
+             </div>
+
+        <div class=" m-2 ">
+                <img class=" w-[500px] h-[500px] border-2 border-solid border-slate-900 rounded-full mr-2 fixed" src="../public/images/<%=cdata.companyname%>.jpeg">
+            <div class="bg-slate-200  flex flex-col rounded-lg ml-[525px] p-3 ">
+                <h1 class="text-3xl font-bold underline mx-auto"><%=data.username%></h1>
+                <h1 class="text-2xl font-bold mt-5">Company Name:- <%=comp%></h1>
+                <h1 class="text-2xl font-bold mt-5">Role:- <%=data.type%></h1>
+                <h1 class="text-2xl font-bold mt-5"> Email:- <%=data.email%></h1>
+                <h1 class="text-2xl font-bold mt-5"> LikdinProfile:- <a href="<%=data.likdinid%>" class="text-sky-950 hover:underline"><%=data.likdinid%></a></h1>
+                <h1 class="text-base font-semibold mt-5"><span class="text-base font-bold ">MobileNumber:-</span> +91 <%=data.mobilenumber%></h1>
+                <div class="flex flex-row mx-auto gap-3 mt-9">
+                    <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="details('<%=cdata._id%>')">Company Profile</button>
+                    <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="postjobmodal.showModal()">Post new Job</button>
+                </div>
+            </div>
+           
+
+        </div>    
+        
+    </body>
+</html>

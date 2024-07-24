@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <title>JoBPortal</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link type="text/css" rel="stylesheet" href="../public/index.css">
+        <script>
+            homelogo=()=>{
+               window.location.href='http://localhost:4000/'
+           }
+           
+           setTimeout(()=>{
+            let welcomemsg=document.getElementById('welcomemsg')
+            welcomemsg.classList.add('disappear')
+            
+           },2000)
+           selected=(val)=>{
+            window.location.href=`http://localhost:4000/dropdown?val=${val}&type=Location`
+           }
+           
+            function select_company(){
+                let select_com=document.getElementById('select_com').value
+                 window.location.href=`http://localhost:4000/dropdown?val=${select_com}&type=companyname`
+           }
+           function select_type(){
+            let select_ty=document.getElementById('select_ty').value
+            window.location.href=`http://localhost:4000/dropdown?val=${select_ty}&type=Type`
+           }
+           function link(val){
+            window.location.href=val
+           }
+           function details(id){
+            window.location.href=`http://localhost:4000/details?val=${id}`
+           }
+           function userportal(){
+            window.location.href=`http://localhost:4000/userportal`
+           }
+           function showcompany(val){
+            if(val==1){
+                let employer=document.getElementById('employer')
+            employer.classList.remove('disappear')
+            employer.classList.add('show')
+            }
+            else{
+                let employer=document.getElementById('lemployer')
+            employer.classList.remove('disappear')
+            employer.classList.add('show')
+            }
+            
+           }
+           function hidecompany(val){
+            if(val==1){
+            let employer=document.getElementById('employer')
+            employer.classList.remove('show')
+            employer.classList.add('disappear')
+            }
+            else{
+                let employer=document.getElementById('lemployer')
+            employer.classList.remove('show')
+            employer.classList.add('disappear')
+            }
+            
+           }
+       </script>
+    </head>
+    <body>
+        <div class="bg-slate-200 m-2 h-16 rounded-lg flex">
+            <img onclick="homelogo()" src="../public/images/logo.png" class="w-20 cursor-pointer" >
+            <form class="w-96 bg-slate-200 mt-2.5 mx-auto" method="get" action="/search">
+                <input type="search" placeholder="Search By Company" name="search" class="w-96 h-12 rounded-lg">
+            </form>
+        <%if(uname && uname!="First Time" && uname!='email already exists' ){%>
+            
+            <button class="btn" onclick="window.location.href='/logout'">LogOut</button>
+            <%if(userprofile){%>
+            <img  src="../public/userprofile/<%=uname%>.png" class="w-12 h-11 mt-3 mr-3 ml-3 cursor-pointer bg-slate-950 rounded-full" onclick="userportal()">
+                <%}else{%>
+                    <img  src="../public/userprofile/user.png" class="w-12 h-11 mt-3 mr-3 ml-3 cursor-pointer bg-slate-950 rounded-full" onclick="userportal()">
+                <%}%>
+                <%}else{%>
+                    <button class="btn" onclick="SignupDialog.showModal()">SignUp</button>
+                <button class="btn" onclick="LoginDialog.showModal()">LogIn</button>
+                    <%}%>
+        </div>
+        <dialog id="SignupDialog" class=" w-[600px] rounded-lg">
+            <div >
+                <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="SignupDialog.close()">X</button>
+                <center>
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-56 " >
+                <form class="flex flex-col" method="post" action="/signup">
+                    <label class="font-semibold"> Username:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11  rounded-2xl my-2" type="text" name="username">
+                    <label class="font-semibold"> Email:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="email" name="email">
+                    <label class="font-semibold"> Password:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="password" name="password">
+                    <label class="font-semibold"> MobileNumber:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="number" name="number">
+                    <div class="flex flex-row mx-auto mb-5">
+                    <input class="border-2 border-solid border-slate-900 h-3 rounded-2xl my-2 " type="Radio" name="type" value="employer"  onclick="showcompany(1)"><b>Employer</b>
+                    <input class="border-2 border-solid border-slate-900 h-3 rounded-2xl my-2 ml-8" type="Radio" name="type" value="employee" onclick="hidecompany(1)"><b>Employee</b>
+                </div>
+                <div class="disappear" id="employer">
+                <label class="font-semibold"> Company_Name:-</label>
+                <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="companyname">    
+            </div>
+            <button onclick="SignupDialog.close()" class="rounded-lg bg-sky-500 w-20 h-11 mt-2.5 mx-auto font-semibold underline hover:bg-sky-400 hover:font-bold">Submit</button>
+                </form>
+            </center>
+            </div>
+        </dialog>
+
+        <dialog id="LoginDialog" class="h-[410px] w-[600px] rounded-lg">
+            <div >
+                <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="LoginDialog.close()">X</button>
+                <center>
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-52">
+                <form class="flex flex-col" method="post" action="/login">
+                    <label class="font-semibold"> Email:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="email" name="email">
+                    <label class="font-semibold"> Password:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="password" name="password">
+                    <div class="flex flex-row mx-auto mb-5">
+                        <input class="border-2 border-solid border-slate-900 h-3 rounded-2xl my-2 " type="Radio" name="type" value="employer"  onclick="showcompany(2)"><b>Employer</b>
+                        <input class="border-2 border-solid border-slate-900 h-3 rounded-2xl my-2 ml-8" type="Radio" name="type" value="employee" onclick="hidecompany(2)"><b>Employee</b>
+                    </div>
+                    <div class="disappear" id="lemployer">
+                        <label class="font-semibold"> Company_Name:-</label>
+                        <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="companyname">    
+                    </div>
+                    <button onclick="LoginDialog.close()" class="rounded-lg bg-sky-500 w-20 h-11 mt-2.5 mx-auto font-semibold underline hover:bg-sky-400 hover:font-bold">Submit</button>
+                </form>
+            </center>
+            </div>
+                    </dialog>
+                    <div class="flex flex-row h-max m-2 gap-2 ">
+                    <div class=" bg-slate-200 basis-3/12 rounded-lg flex flex-col items-center  fixed ">
+                        <select class="bg-slate-200 border-4 border-solid border-black rounded-lg m-2 font-semibold" onchange="select_company()" id="select_com">
+                            <option >Select Company</option>
+                            <%for(let jdata of jobdata){%>
+                            <option><%=jdata.companyname%></option>
+                            <%}%>
+                        </select>
+                        <select class="bg-slate-200 border-4 border-solid border-black rounded-lg m-2 font-semibold mt-48" onchange="select_type()" id="select_ty">
+                            <option>Select Type</option>
+                            <option>Web Development</option>
+                            <option>App Development</option>
+                            <option>UI/UX ARCHITECT</option>
+                            <option>Software Tester</option>
+                            <option>Data Analyst</option>
+                            <option>Machine Learning</option>
+                            <option>Marketing</option>
+                            <option>Human Resources</option>
+                            <option>Sales Manager</option>
+                            <option>IT Support</option>
+                        </select>
+                        <div class="mt-48 space-x-3 p-2">
+                            <input  type="radio" name="JobType" id="Remote"  onclick="selected('Remote')"><span class="font-semibold ">Remote</span>
+                            <input  type="radio" name="JobType" id="HyBrid" onclick="selected('HyBrid')"><span class="font-semibold ">HyBrid</span>
+                            <input  type="radio" name="JobType" id="OnSite" onclick="selected('OnSite')"><span class="font-semibold ">OnSite</span>
+                        </div>
+                    </div>
+                    <div class="basis-9/12 ml-[365px] rounded-lg h-max " >
+                        <%for(let jdata of resu){%>
+                        <div class=" bg-slate-200 h-64 rounded-lg  flex flex-row border-2 border-solid border-slate-900 mb-2">
+                            <% let str2=jdata.companyname%>
+                                <% let nstr2=str2.split(".")%>
+                            <img class="w-64 h-60 rounded-lg m-1 mix-blend-multiply" src="../public/images/<%=nstr2[0]%>.jpeg ">
+                            <div class="w-4/5  flex flex-col justify-center p-3">
+                                <h1 class="font-bold mb-2"><%=jdata.companyname%></h1>
+                                <h3 class="font-semibold mb-2"><%=jdata.Type%></h3>
+                                <h3 class="font-semibold mb-2"><%=jdata.Location%></h3>
+                                <% let str=jdata.about%>
+                                <% let nstr=str.slice(0,300)%>
+                                <h5 class="mb-5"><%=nstr%>...</h5>
+                                <div class="flex flex-row mx-auto gap-3">
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="link('<%=jdata.Link%>')">Linkdin Profile</button>
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="details('<%=jdata._id%>')">Know More</button>
+                            </div>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+
+    </body>
+</html>

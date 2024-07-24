@@ -1,0 +1,66 @@
+[{
+  "_id": {
+    "$oid": "6698ac0ff4e9ef36c61f018a"
+  },
+  "username": "vernoica",
+  "email": "JANATON_DOE_male@GMAIL.COM",
+  "password": "123456",
+  "mobilenumber": "7470495352",
+  "type": "employee",
+  "skills": [
+    "Artificial Intelligence",
+    "Cloud Computing",
+    "Back End",
+    "User Experience",
+    "Penetration Testing"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6698b2276a321712d72209df"
+  },
+  "username": "admin",
+  "email": "admin@gmail.com",
+  "password": "12weds",
+  "mobilenumber": "123456789",
+  "type": "employer",
+  "skills": [
+    "Quality Assurance"
+  ]
+},
+{
+  "_id": {
+    "$oid": "669f3b1a1c0c29260075c218"
+  },
+  "username": "tanveer kukreja",
+  "email": "Tanveerkukreja8@gmail.com",
+  "password": "1452",
+  "mobilenumber": "896547123",
+  "type": "employer",
+  "company_name": "CyberSocial"
+},
+{
+  "_id": {
+    "$oid": "669f40a00308a657e734f9a9"
+  },
+  "username": "Muskan",
+  "email": "muskan@gmail.com",
+  "password": "1452",
+  "mobilenumber": "985632147",
+  "type": "employer",
+  "company_name": "FuziXel Technologies"
+},
+{
+  "_id": {
+    "$oid": "669f4230010eda3377f1c195"
+  },
+  "username": "Taha",
+  "email": "tahatc948@gmail.com",
+  "password": "1452",
+  "mobilenumber": "7470495352",
+  "type": "employee",
+  "likdinid": "https://www.linkedin.com/in/taha-9669b3250/",
+  "skills": [
+    "Quality Assurance"
+  ]
+}]

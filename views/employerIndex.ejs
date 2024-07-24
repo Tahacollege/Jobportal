@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <title>JoBPortal</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link type="text/css" rel="stylesheet" href="../public/index.css">
+        <script>
+           
+           setTimeout(()=>{
+            let welcomemsg=document.getElementById('welcomemsg')
+            welcomemsg.classList.add('disappear')
+            
+           },2000)
+           function link(val){
+            window.location.href=val
+           }
+           function details(id){
+            window.location.href=`http://localhost:4000/details?val=${id}`
+           }
+           function resume(id){
+            window.location.href=`http://localhost:4000/details?val=${id}`
+           }
+           function userportal(){
+            window.location.href=`http://localhost:4000/userportal`
+           }
+           function showcompany(){
+            let employer=document.getElementById('employer')
+            employer.classList.remove('disappear')
+            employer.classList.add('show')
+           }
+           function hidecompany(){
+            let employer=document.getElementById('employer')
+            employer.classList.remove('show')
+            employer.classList.add('disappear')
+           }
+           function userportal(){
+            window.location.href=`http://localhost:4000/employerportal`
+           }
+       </script>
+    </head>
+    <body>
+        <div class="bg-green-500 w-2/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1" id="welcomemsg">Welcome <%=uname%> </div>
+        <div class="bg-slate-200 m-2 h-16 rounded-lg flex">
+            <img onclick="homelogo()" src="../public/images/logo.png" class="w-20 cursor-pointer" >
+            <form class=" visi w-96 bg-slate-200 mt-2.5 mx-auto" method="get" action="/search">
+                <input type="search" placeholder="Search By Company" name="search" class="w-96 h-12 rounded-lg ">
+            </form>
+            <button class="btn" onclick="window.location.href='/logout'">LogOut</button>
+            <% let str3=cdata.companyname%>
+            <% let nstr3=str3.split(".")%>
+            <img  src="../public/images/<%=nstr3[0]%>.jpeg" class="w-12 h-11 mt-3 mr-3 ml-3 cursor-pointer bg-slate-950 rounded-full" onclick="userportal()">
+                
+        </div>
+                    <div class="flex flex-row h-max m-2 gap-2 ">
+                    <div class="w-screen  rounded-lg h-max " >
+                        <div class=" bg-slate-200 h-64 rounded-lg  flex flex-row border-2 border-solid border-slate-900 mb-2">
+                            <% let str2=cdata.companyname%>
+                                <% let nstr2=str2.split(".")%>
+                            <img class="w-64 h-60 rounded-lg m-1 mix-blend-multiply" src="../public/images/<%=nstr2[0]%>.jpeg ">
+                            <div class="w-4/5  flex flex-col justify-center p-3">
+                                <h1 class="font-bold mb-2"><%=cdata.companyname%></h1>
+                                <h3 class="font-semibold mb-2"><%=cdata.Type%></h3>
+                                <h3 class="font-semibold mb-2"><%=cdata.Location%></h3>
+                                <% let str=cdata.about%>
+                                <% let nstr=str.slice(0,300)%>
+                                <h5 class="mb-5"><%=nstr%>...</h5>
+                                <div class="flex flex-row mx-auto gap-3">
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="link('<%=cdata.Link%>')">Linkdin Profile</button>
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="details('<%=cdata._id%>')">Know More</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" flex flex-col rounded-lg  p-3 mt-5">
+                    <h1 class="font-bold mx-auto text-2xl mb-10 underline">Pending Applications</h1>
+                    <%for(let jdata of adata){%>
+                        <div class="bg-slate-200  rounded-lg  flex flex-row border-2 border-solid border-slate-900 mb-10">
+                            <% let str2=jdata.company_name%>
+                                <% let nstr2=str2.split(".")%>
+                            <img class="w-64 h-60 rounded-lg m-1 mix-blend-multiply" src="../public/images/<%=nstr2[0]%>.jpeg ">
+                            <div class="w-4/5  flex flex-col justify-center p-3">
+                                <h1 class="font-bold mb-2"><%=jdata.useremail%></h1>
+                                <h3 class="font-semibold mb-5"><%=jdata.company_type%></h3>
+                                <h5 class="mb-5"><span class="text-base font-bold underline">Cover Letter:-</span><%=jdata.cover_letter%>...</h5>
+                                <div class="flex flex-row mx-auto gap-3">
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="link('<%=jdata.likdinid%>')">Linkdin Profile</button>
+                                <a href="../public/uploads/<%=jdata.useremail%>.pdf" download><button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" >View Resume</button></a>
+                            </div>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                
+
+    </body>
+</html>

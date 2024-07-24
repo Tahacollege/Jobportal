@@ -1,0 +1,217 @@
+<html>
+    <head>
+        <title>JoBPortal</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link type="text/css" rel="stylesheet" href="../public/index.css">
+        <script>
+            homelogo=()=>{
+               window.location.href='http://localhost:4000/'
+           }
+           function link(val){
+            window.location.href=val
+           }
+           function details(id){
+            window.location.href=`http://localhost:4000/details?val=${id}`
+           }
+           function apply(id){
+            var username='<%=uname%>'
+            if(username){
+            ApplyDialog.showModal()
+            /*var form=document.getElementById('apply_form')
+           form.addEventListener('submit',(e)=>{
+            e.preventDefault()
+            const fd=new FormData(form)
+            const urlEncoded=new URLSearchParams(fd).toString();
+
+            fetch('http://localhost:4000/jobapply',{
+                method:"Post",
+                body:fd,
+            })
+           })*/
+            }
+            else{
+            window.location.href=`http://localhost:4000/apply?val=${id}`
+            }
+           }
+           setTimeout(()=>{
+            let welcomemsg=document.getElementById('welcomemsg')
+            welcomemsg.classList.add('disappear')
+           },2000)
+
+           function userportal(){
+            window.location.href=`http://localhost:4000/userportal`
+           }
+           function showcompany(val){
+            if(val==1){
+                let employer=document.getElementById('employer')
+            employer.classList.remove('disappear')
+            employer.classList.add('show')
+            }
+            else{
+                let employer=document.getElementById('lemployer')
+            employer.classList.remove('disappear')
+            employer.classList.add('show')
+            }
+            
+           }
+           function hidecompany(val){
+            if(val==1){
+            let employer=document.getElementById('employer')
+            employer.classList.remove('show')
+            employer.classList.add('disappear')
+            }
+            else{
+                let employer=document.getElementById('lemployer')
+            employer.classList.remove('show')
+            employer.classList.add('disappear')
+            }
+            
+           }
+           
+       </script>
+    </head>
+    <body>
+        <%if(uname){%>
+            <div class="bg-green-500 w-2/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1" id="welcomemsg">Welcome <%=uname%> </div>
+                <%}else{%>
+                <div class="bg-red-500 w-2/12 h-10 rounded-lg text-center pt-1 font-semibold mx-auto relative mt-1" id="welcomemsg">Please Login Or Signup To Apply </div>
+                    <%}%>
+        <div class="bg-slate-200 m-2 h-16 rounded-lg flex">
+            <img onclick="homelogo()" src="../public/images/logo.png" class="w-20 cursor-pointer" >
+            <form class="w-96 bg-slate-200 mt-2.5 mx-auto" method="get" action="/search">
+                <input type="search" placeholder="Search By Company" name="search" class="w-96 h-12 rounded-lg">
+            </form>
+        <%if(uname ){%>
+            <button class="btn" onclick="window.location.href='/logout'">LogOut</button>
+            <%if(userprofile){%>
+                <img  src="../public/userprofile/<%=uname%>.png" class="w-12 h-11 mt-3 mr-3 ml-3 cursor-pointer bg-slate-950 rounded-full" onclick="userportal()">
+                    <%}else{%>
+                        <img  src="../public/userprofile/user.png" class="w-12 h-11 mt-3 mr-3 ml-3 cursor-pointer bg-slate-950 rounded-full" onclick="userportal()">
+                    <%}%>
+                <%}else{%>
+                    <button class="btn" onclick="SignupDialog.showModal()">SignUp</button>
+                <button class="btn" onclick="LoginDialog.showModal()">LogIn</button>
+                    <%}%>
+        </div>
+        <dialog id="SignupDialog" class=" w-[600px] rounded-lg">
+            <div >
+                <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="SignupDialog.close()">X</button>
+                <center>
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-56 " >
+                <form class="flex flex-col" method="post" action="/signup">
+                    <label class="font-semibold"> Username:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11  rounded-2xl my-2" type="text" name="username">
+                    <label class="font-semibold"> Email:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="email" name="email">
+                    <label class="font-semibold"> Password:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="password" name="password">
+                    <label class="font-semibold"> MobileNumber:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="number" name="number">
+                    <div class="flex flex-row mx-auto mb-5">
+                    <input class="border-2 border-solid border-slate-900 h-3 rounded-2xl my-2 " type="Radio" name="type" value="employer"  onclick="showcompany(1)"><b>Employer</b>
+                    <input class="border-2 border-solid border-slate-900 h-3 rounded-2xl my-2 ml-8" type="Radio" name="type" value="employee" onclick="hidecompany(1)"><b>Employee</b>
+                </div>
+                <div class="disappear" id="employer">
+                <label class="font-semibold"> Company_Name:-</label>
+                <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="companyname">    
+            </div>
+            <button onclick="SignupDialog.close()" class="rounded-lg bg-sky-500 w-20 h-11 mt-2.5 mx-auto font-semibold underline hover:bg-sky-400 hover:font-bold">Submit</button>
+                </form>
+            </center>
+            </div>
+        </dialog>
+
+        <dialog id="LoginDialog" class="h-[410px] w-[600px] rounded-lg">
+            <div >
+                <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="LoginDialog.close()">X</button>
+                <center>
+                <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-52">
+                <form class="flex flex-col" method="post" action="/login">
+                    <label class="font-semibold"> Email:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="email" name="email">
+                    <label class="font-semibold"> Password:-</label>
+                    <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="password" name="password">
+                    <div class="flex flex-row mx-auto mb-5">
+                        <input class="border-2 border-solid border-slate-900 h-3 rounded-2xl my-2 " type="Radio" name="type" value="employer"  onclick="showcompany(2)"><b>Employer</b>
+                        <input class="border-2 border-solid border-slate-900 h-3 rounded-2xl my-2 ml-8" type="Radio" name="type" value="employee" onclick="hidecompany(2)"><b>Employee</b>
+                    </div>
+                    <div class="disappear" id="lemployer">
+                        <label class="font-semibold"> Company_Name:-</label>
+                        <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="companyname">    
+                    </div>
+                    <button onclick="LoginDialog.close()" class="rounded-lg bg-sky-500 w-20 h-11 mt-2.5 mx-auto font-semibold underline hover:bg-sky-400 hover:font-bold">Submit</button>
+                </form>
+            </center>
+            </div>
+                    </dialog>
+                    <%if(udata){%>
+                    <dialog id="ApplyDialog" class="w-[600px] rounded-lg">
+                        <div >
+                            <button class="float-right w-11 h-11 border-2 border-solid border-slate-900 rounded-full bg-slate-900 text-slate-50" onclick="ApplyDialog.close()">X</button>
+                            <center>
+                            <img src="../public/images/logo.png" class="w-40 h-40 border-2 border-solid border-slate-950 rounded-full mt-1 mx-52">
+                                    <form class="flex flex-col" method="post" action="/jobapply" enctype="multipart/form-data" id="apply_form" >
+                                <label class="font-semibold"> Email:-</label>
+                                <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="email" name="email" value="<%=udata.email%>" >
+                                <label class="font-semibold"> MobileNumber:-</label>
+                                <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="number" name="number" value="<%=udata.mobilenumber%>">
+                                <label class="font-semibold"> Resume:-</label>
+                                <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2 p-2" type="file" name="resume" accept=".pdf" required>
+                                <label class="font-semibold"> Cover Letter:-</label>
+                                <textarea class="border-2 border-solid border-slate-900 h-20 rounded-2xl my-2 "  name="cover_letter" required></textarea>
+                                <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="c_id" value="<%=data._id%>" hidden>
+                                <input class="border-2 border-solid border-slate-900 h-11 rounded-2xl my-2" type="text" name="likdinid" value="<%=udata.likdinid%>" hidden>
+                                <button onclick="ApplyDialog.close()" class="rounded-lg bg-sky-500 w-20 h-11 mt-2.5 mx-auto font-semibold underline hover:bg-sky-400 hover:font-bold" >Submit</button>
+                                </form>    
+                               
+                           
+                        </center>
+                        </div>
+                                </dialog> <%}else{%>
+                                    <%}%>
+
+                    <div class=" m-2 flex flex-row">
+                        <% let str3=data.companyname%>
+                                <% let nstr2=str3.split(".")%>
+                        <img class=" w-4/12 border-2 border-solid border-slate-900 rounded-full mr-2 fixed" src="../public/images/<%=nstr2[0]%>.jpeg">
+                        <div class="bg-slate-200 w-8/12 flex  flex-col rounded-lg ml-[520px] p-3 ">
+                            <h1 class="text-3xl font-bold underline mx-auto"><%=data.companyname%></h1>
+                            <h1 class="text-2xl font-bold mt-5">Role:- <%=data.Type%></h1>
+                            <h1 class="text-2xl font-bold mt-5"> Place Of Work:- <%=data.Location%></h1>
+                            <h1 class="text-base font-semibold mt-5"><span class="text-base font-bold underline">About Company:-</span> <%=data.about%></h1>
+                            <div class="flex flex-col">
+                            <h1 class="text-3xl font-bold underline mt-10 ">Qualifications </h1>
+                            <%let str=data.Qualifications%>
+                            <% let qual=str.split(".")%>
+                            <% let len=qual.length%>
+                            <ul >
+                            <% while(len>=0){%>
+                                <li class="text-xl font-semibold mt-3 "><%=qual[len]%></li>
+                                <% len=len-1%>
+                                <%}%>
+                            </ul>
+
+                            <h1 class="text-3xl font-bold underline mt-10 ">Responsibilities</h1>
+                            <%let str2=data.Responsibilities%>
+                            <% let qual2=str2.split(".")%>
+                            <% let len2=qual2.length%>
+                            <ul >
+                            <% while(len2>=0){%>
+                                <li class="text-xl font-semibold mt-3 "><%=qual2[len2]%></li>
+                                <% len2=len2-1%>
+                                <%}%>
+                            </ul>
+                            </div>
+                            <div class="flex flex-row mx-auto gap-3 mt-9">
+                                <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="link('<%=data.Link%>')">Linkdin Profile</button>
+                                <%if(already_applied){%>
+                                <button class="bg-green-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-green-400 hover:font-bold hover:underline h-12" disabled>Already Applied</button>
+                                <%}else{%>
+                                    <button class="bg-sky-500 rounded-lg font-bold w-36  border-2 border-solid border-slate-900 hover:bg-sky-400 hover:font-bold hover:underline h-12" onclick="apply('<%=data._id%>')">Apply</button>
+                                        <%}%>
+                            </div>
+                        </div>
+                    </div>
+    </body>
+</html>
