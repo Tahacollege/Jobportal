@@ -936,8 +936,9 @@ video {
   width: 600px;
 }
 
-.w-screen {
-  width: 100vw;
+.w-max {
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .basis-3\/12 {
@@ -1284,8 +1285,20 @@ video {
     width: 1155px;
   }
 
+  .sm\:w-\[1200px\] {
+    width: 1200px;
+  }
+
+  .sm\:w-\[1210px\] {
+    width: 1210px;
+  }
+
   .sm\:w-\[500px\] {
     width: 500px;
+  }
+
+  .sm\:w-\[600px\] {
+    width: 600px;
   }
 
   .sm\:w-\[800px\] {
