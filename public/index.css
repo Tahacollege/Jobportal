@@ -667,9 +667,9 @@ video {
   margin-right: 14rem;
 }
 
-.mx-\[20px\] {
-  margin-left: 20px;
-  margin-right: 20px;
+.mx-\[30px\] {
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 .mx-\[60px\] {
@@ -1242,8 +1242,8 @@ video {
     margin-left: 0.75rem;
   }
 
-  .sm\:ml-40 {
-    margin-left: 10rem;
+  .sm\:ml-44 {
+    margin-left: 11rem;
   }
 
   .sm\:ml-\[365px\] {
@@ -1258,8 +1258,8 @@ video {
     margin-left: 525px;
   }
 
-  .sm\:mt-64 {
-    margin-top: 16rem;
+  .sm\:mt-96 {
+    margin-top: 24rem;
   }
 
   .sm\:flex {
@@ -1276,6 +1276,10 @@ video {
 
   .sm\:h-64 {
     height: 16rem;
+  }
+
+  .sm\:h-\[450px\] {
+    height: 450px;
   }
 
   .sm\:h-\[500px\] {
