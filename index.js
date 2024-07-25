@@ -23,6 +23,15 @@ var jobstorage=multer.diskStorage({
         return cb(null,file.originalname)
     }
 })
+var jobstorage2=multer.diskStorage({
+    destination:function(req,file,cb){
+        return cb(null,'./public/images')
+    },
+    filename:function (req,file,cb){
+        return cb(null,`${req.session.companyname}.jpeg`)
+    }
+})
+
 var storage=multer.diskStorage({
     destination:function(req,file,cb){
         return cb(null,'./public/uploads/')
@@ -35,6 +44,7 @@ var storage=multer.diskStorage({
 const upload=multer({storage})
 const phupload=multer({storage:phstorage})
 const jobupload=multer({storage:jobstorage})
+const jobupload2=multer({storage:jobstorage2})
 const { ObjectId } = require('mongodb');
 var userprofile=false
 var employer=false
@@ -118,7 +128,7 @@ app.post('/signup',async(req,resp)=>{
         if(type=='employer'){
             let companyname=req.body.companyname
             let checkcomapany=await collection2.findOne({'companyname':companyname})
-            if(checkcomapany.employer!=email){
+            if(checkcomapany && checkcomapany.employer!=email){
                 var uname="email already exists Or Company is not Registered by You"
                 var log=undefined
                 resp.render(`index`,{uname,log,jobdata,fulldata,p1,p2,p3,p4,p5,userprofile})
@@ -131,6 +141,16 @@ app.post('/signup',async(req,resp)=>{
                 'type':type,
                 'company_name':companyname,
                 'likdinid':likdinid
+            })
+            let addcomp=await collection2.insertOne({
+                "companyname": companyname,
+  "Type": "",
+  "Location": "",
+  "Responsibilities": "",
+  "Qualifications": "",
+  "about": "",
+  "Link": likdinid,
+  "employer": email
             })
             employer=true
         }
@@ -161,9 +181,9 @@ app.post('/signup',async(req,resp)=>{
 }
 var log=undefined
 if(employer){
-    let cdata=await collection2.findOne({'companyname':companyname})
-    let adata=await collection3.find({'company_name':data.company_name}).toArray()
-        resp.render(`employerIndex`,{uname,log,cdata,userprofile,adata})
+    var uname=req.session.username
+    let cdata=await collection2.findOne({'companyname':req.body.companyname})
+    let adata=await collection3.find({'company_name':req.body.companyname}).toArray()
     resp.render(`employerIndex`,{uname,log,cdata,userprofile,adata})
 }
 else{
@@ -190,7 +210,7 @@ app.post('/login',async (req,resp)=>{
     if(type=='employer'){
         companyname=req.body.companyname
         let checkcomapany=await collection2.findOne({'companyname':companyname})
-        if(checkcomapany.employer!=email){
+        if(checkcomapany && checkcomapany.employer!=email){
             var uname="email already exists Or Company is not Registered by You"
             let log=undefined
             resp.render(`index`,{uname,log,jobdata,fulldata,p1,p2,p3,p4,p5,userprofile})
@@ -215,7 +235,10 @@ app.post('/login',async (req,resp)=>{
     }
      data=await collection.findOne({'email':email, 'password':password})
     if(data.type=='employer'){
+        companyname=req.body.companyname
+        req.session.companyname=req.body.companyname
         let cdata=await collection2.findOne({'companyname':companyname})
+        console.log(cdata)
         let adata=await collection3.find({'company_name':companyname}).toArray()
         employer=true
         req.session.companyname=req.body.companyname
@@ -571,6 +594,17 @@ app.get('/search',async(req,resp)=>{
         resp.send("No Result found")
     }
 })
+app.post('/companypicupdate',jobupload2.single('companyphoto'),async(req,resp)=>{
+    let result=await DbConnection
+var c_id=req.body.c_id
+console.log(req.file)
+let collection=result.collection('jobs')
+let collection2=result.collection('users')
+var email=req.session.email
+var udata=await collection2.findOne({'email':email})
+let data=await collection.findOne({'_id':new ObjectId(c_id)})
+resp.render('employer_company_details',{data,udata})
+})
 
 app.post('/aboutupdate',async(req,resp)=>{
     let result=await DbConnection
@@ -580,6 +614,16 @@ let collection2=result.collection('users')
 if(req.body.about){
     let updatedata=await collection.updateOne({'_id':new ObjectId(c_id)},{$set:{
         "about":req.body.about
+    }})
+}
+else if(req.body.role){
+    let updatedata=await collection.updateOne({'_id':new ObjectId(c_id)},{$set:{
+        "Type":req.body.role
+    }})
+}
+else if(req.body.location){
+    let updatedata=await collection.updateOne({'_id':new ObjectId(c_id)},{$set:{
+        "Location":req.body.location
     }})
 }
 else if(req.body.resp){
