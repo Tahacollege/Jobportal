@@ -6,13 +6,13 @@
         <link type="text/css" rel="stylesheet" href="../public/index.css">
         <script>
             homelogo=()=>{
-               window.location.href='https://jobportal-fefw.onrender.com/'
+               window.location.href='https://jobportal-production-6e80.up.railway.app/'
            }
            function link(val){
             window.location.href=val
            }
            function details(id){
-            window.location.href=`https://jobportal-fefw.onrender.com/details?val=${id}`
+            window.location.href=`https://jobportal-production-6e80.up.railway.app/details?val=${id}`
            }
            function apply(id){
             var username='<%=uname%>'
@@ -24,14 +24,14 @@
             const fd=new FormData(form)
             const urlEncoded=new URLSearchParams(fd).toString();
 
-            fetch('https://jobportal-fefw.onrender.com/jobapply',{
+            fetch('https://jobportal-production-6e80.up.railway.app/jobapply',{
                 method:"Post",
                 body:fd,
             })
            })*/
             }
             else{
-            window.location.href=`https://jobportal-fefw.onrender.com/apply?val=${id}`
+            window.location.href=`https://jobportal-production-6e80.up.railway.app/apply?val=${id}`
             }
            }
            setTimeout(()=>{
@@ -40,7 +40,7 @@
            },2000)
 
            function userportal(){
-            window.location.href=`https://jobportal-fefw.onrender.com/userportal`
+            window.location.href=`https://jobportal-production-6e80.up.railway.app/userportal`
            }
            function showcompany(val){
             if(val==1){
